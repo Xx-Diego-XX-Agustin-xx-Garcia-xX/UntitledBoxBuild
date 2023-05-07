@@ -8,6 +8,9 @@ public class GameController : MonoBehaviour
 {
     public GameObject gameOverText;
     public TextMeshProUGUI scoreText;
+    public AudioSource audioSource;
+    public AudioClip gameOverClip;
+    public AudioClip scoreClip;
     public static GameController instance;
     public bool gameOver = false;
     public float scrollSpeed = -100f;
@@ -23,12 +26,20 @@ public class GameController : MonoBehaviour
 	    Destroy(gameObject);
 	}
     }
+    void Start()
+    {
+	audioSource = GetComponent<AudioSource>();
+    }
     void Update()
     {
         if ((gameOver == true) && (Input.GetKey(KeyCode.Space)))
 	{
 	    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
+    }
+    void PlaySound(AudioClip clip)
+    {
+	audioSource.PlayOneShot(clip);
     }
     public void PlayerScored()
     {
@@ -38,10 +49,12 @@ public class GameController : MonoBehaviour
 	}
 	score++;
 	scoreText.text = "Score: " + score.ToString();
+	PlaySound(scoreClip);
     }
     public void PlayerDied()
     {
 	gameOverText.SetActive(true);
 	gameOver = true;
+	PlaySound(gameOverClip);
     }
 }

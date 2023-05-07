@@ -5,12 +5,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rigidBody;
+    private AudioSource audioSource;
     private bool isGameOver = false;
+    public AudioClip jumpClip;
     public float force;
     public float bound;
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -20,6 +23,7 @@ public class PlayerController : MonoBehaviour
 	    {
 		rigidBody.velocity = Vector3.zero;
 		rigidBody.AddForce(new Vector3(0, force, 0));
+		PlaySound(jumpClip);
 	    }
 	    else if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
 	    {
@@ -34,11 +38,15 @@ public class PlayerController : MonoBehaviour
         {
 	    OnCollisionEnter();
 	}
-	if ((transform.position.y > bound) || (transform.position.y < -bound))
+	else if ((transform.position.y > bound) || (transform.position.y < -bound))
         {
 	    OnCollisionEnter();
 	}
 	
+    }
+    void PlaySound(AudioClip clip)
+    {
+	audioSource.PlayOneShot(clip);
     }
     void OnCollisionEnter()
     {
