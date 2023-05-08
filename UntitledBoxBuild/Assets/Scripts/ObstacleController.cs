@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class ObstacleController : MonoBehaviour
 {
     public GameObject obstacle;
     public GameObject player;

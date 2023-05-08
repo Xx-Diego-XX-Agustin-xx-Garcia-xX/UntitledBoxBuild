@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScrollingController : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     private Rigidbody rigidBody;
     void Start()

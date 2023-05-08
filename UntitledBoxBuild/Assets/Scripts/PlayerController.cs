@@ -36,11 +36,15 @@ public class PlayerController : MonoBehaviour
 	}
 	if ((transform.position.x > bound) || (transform.position.x < -bound))
         {
-	    OnCollisionEnter();
+	    isGameOver = true;
+	    Debug.Log("Game Over!");
+	    GameController.instance.PlayerDied();
 	}
 	else if ((transform.position.y > bound) || (transform.position.y < -bound))
         {
-	    OnCollisionEnter();
+	    isGameOver = true;
+	    Debug.Log("Game Over!");
+	    GameController.instance.PlayerDied();
 	}
 	
     }
@@ -50,9 +54,15 @@ public class PlayerController : MonoBehaviour
     }
     void OnCollisionEnter()
     {
-	rigidBody.velocity = Vector3.zero;
-        isGameOver = true;
-	Debug.Log("Game Over!");
-	GameController.instance.PlayerDied();
+	if (GameController.instance.lives < 0)
+	{
+            rigidBody.velocity = Vector3.zero;
+            isGameOver = true;
+	    GameController.instance.PlayerDied();
+	}
+	else
+	{
+	    GameController.instance.PlayerUnalived();
+	}
     }
 }
